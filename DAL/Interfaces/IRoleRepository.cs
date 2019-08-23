@@ -2,7 +2,7 @@
 
 namespace DAL.Interfaces
 {
-    internal interface IRoleRepository
+    public interface IRoleRepository
     {
         void AddRole(Role role);
 

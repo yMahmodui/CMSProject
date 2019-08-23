@@ -5,7 +5,7 @@ using Models;
 
 namespace DAL
 {
-    internal class UnitOfWork : IDisposable
+    public class UnitOfWork : IDisposable
     {
         private DatabaseContext _context;
 
