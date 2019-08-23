@@ -41,7 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminPanel\GetRegisteredUserViewModel.cs" />
+    <Compile Include="Authorization\LoginViewModel.cs" />
+    <Compile Include="Authorization\RegisterViewModel.cs" />
+    <Compile Include="General\JsonResultViewModel.cs" />
+    <Compile Include="General\UserViewModel.cs" />
+    <Compile Include="Home\GetPostViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dtx\Dtx.csproj">
+      <Project>{095a886a-9be3-426c-b770-51436378f66f}</Project>
+      <Name>Dtx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
