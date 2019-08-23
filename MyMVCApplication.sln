@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMVCApplication", "MyMVCAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMVCApplication.Tests", "MyMVCApplication.Tests\MyMVCApplication.Tests.csproj", "{15B2BE15-0CEA-4A89-BA9B-2F86288280D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{1F64740B-2D18-4732-8DE8-ACF996CF50C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{15B2BE15-0CEA-4A89-BA9B-2F86288280D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15B2BE15-0CEA-4A89-BA9B-2F86288280D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15B2BE15-0CEA-4A89-BA9B-2F86288280D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F64740B-2D18-4732-8DE8-ACF996CF50C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F64740B-2D18-4732-8DE8-ACF996CF50C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F64740B-2D18-4732-8DE8-ACF996CF50C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F64740B-2D18-4732-8DE8-ACF996CF50C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
