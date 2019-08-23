@@ -100,7 +100,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Controllers\ValuesControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -112,6 +111,10 @@
     <ProjectReference Include="..\MyMVCApplication\MyMVCApplication.csproj">
       <Project>{B1178560-99E9-4049-AE4A-C94E21809FE0}</Project>
       <Name>MyMVCApplication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
+      <Project>{4858800f-8bf6-4739-9f77-3e18a69b840e}</Project>
+      <Name>ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

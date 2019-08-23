@@ -1,7 +1,8 @@
 ﻿using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MyMVCApplication;
-using MyMVCApplication.Controllers;
+using MyMVCApp.Controllers;
+using ViewModels.General;
+using ViewModels.Home;
 
 namespace MyMVCApplication.Tests.Controllers
 {
@@ -15,11 +16,11 @@ namespace MyMVCApplication.Tests.Controllers
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            JsonResult result = controller.GetPost(new GetPostViewModel.Request()) as JsonResult;
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("Home Page", result.ViewBag.Title);
+            Assert.AreEqual(true, ((JsonResultViewModel) result.Data).is_successful);
         }
     }
 }
