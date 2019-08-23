@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Enums\ResponseErrorType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Hashing.cs" />
+    <Compile Include="Time\JsTime.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
