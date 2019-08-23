@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseContext.cs" />
     <Compile Include="Entities\Permission.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\RolePermission.cs" />
