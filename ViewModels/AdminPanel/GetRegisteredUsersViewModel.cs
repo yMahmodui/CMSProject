@@ -3,10 +3,11 @@ using ViewModels.General;
 
 namespace ViewModels.AdminPanel
 {
-    public class GetRegisteredUserViewModel
+    public class GetRegisteredUsersViewModel
     {
         public class Request
         {
+            public string token { get; set; }
         }
 
         public class Response

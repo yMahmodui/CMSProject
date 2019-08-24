@@ -8,7 +8,7 @@ namespace ViewModels.General
 
         public string error_message { get; set; } = string.Empty;
 
-        public object response { get; set; } = string.Empty;
+        public object data { get; set; } = string.Empty;
 
         public ResponseErrorType error_type { get; set; } = ResponseErrorType.NoError;
     }

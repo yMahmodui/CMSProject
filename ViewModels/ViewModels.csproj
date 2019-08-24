@@ -33,15 +33,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminPanel\GetRegisteredUserViewModel.cs" />
+    <Compile Include="AdminPanel\GetRegisteredUsersViewModel.cs" />
     <Compile Include="Authorization\LoginViewModel.cs" />
     <Compile Include="Authorization\RegisterViewModel.cs" />
     <Compile Include="General\JsonResultViewModel.cs" />
@@ -54,6 +49,9 @@
       <Project>{095a886a-9be3-426c-b770-51436378f66f}</Project>
       <Name>Dtx</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
