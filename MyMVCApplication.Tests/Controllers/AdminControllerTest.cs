@@ -1,22 +1,22 @@
 ﻿using Dtx.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyMVCApp.Controllers;
+using ViewModels.AdminPanel;
 using ViewModels.General;
-using ViewModels.Home;
 
 namespace MyMVCApplication.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class AdminControllerTest
     {
         [TestMethod]
-        public void GetPostWithoutAuth()
+        public void GetRegisteredUsersWithoutAuth()
         {
             // Arrange
-            var controller = new HomeController();
+            var controller = new AdminController();
 
             // Act
-            var result = controller.GetPost(new GetPostViewModel.Request());
+            var result = controller.GetRegisteredUsers(new GetRegisteredUsersViewModel.Request());
 
             // Assert
             Assert.IsNotNull(result);
@@ -24,24 +24,19 @@ namespace MyMVCApplication.Tests.Controllers
             Assert.IsInstanceOfType(result.Data, typeof(JsonResultViewModel));
             var jsonResult = (JsonResultViewModel) result.Data;
             Assert.IsNotNull(jsonResult);
-            Assert.IsTrue(jsonResult.is_successful);
-
-            Assert.IsInstanceOfType(jsonResult.data, typeof(GetPostViewModel.Response));
-            var data = (GetPostViewModel.Response) jsonResult.data;
-            Assert.IsNotNull(data);
-            Assert.IsFalse(data.is_complete_passage);
+            Assert.IsFalse(jsonResult.is_successful);
         }
 
         [TestMethod]
-        public void GetPostWithAuth()
+        public void GetRegisteredUsersWithAuth()
         {
             // Arrange
-            var controller = new HomeController();
+            var controller = new AdminController();
 
             // Act
-            var result = controller.GetPost(new GetPostViewModel.Request
+            var result = controller.GetRegisteredUsers(new GetRegisteredUsersViewModel.Request
             {
-                token = JWT.GetToken("test@localhost.com")
+                token = JWT.GetToken("admin@localhost.com")
             });
 
             // Assert
@@ -52,10 +47,11 @@ namespace MyMVCApplication.Tests.Controllers
             Assert.IsNotNull(jsonResult);
             Assert.IsTrue(jsonResult.is_successful);
 
-            Assert.IsInstanceOfType(jsonResult.data, typeof(GetPostViewModel.Response));
-            var data = (GetPostViewModel.Response) jsonResult.data;
+            Assert.IsInstanceOfType(jsonResult.data, typeof(GetRegisteredUsersViewModel.Response));
+            var data = (GetRegisteredUsersViewModel.Response) jsonResult.data;
             Assert.IsNotNull(data);
-            Assert.IsTrue(data.is_complete_passage);
+            Assert.IsNotNull(data.users);
+            Assert.AreNotEqual(0, data.users.Count);
         }
     }
 }
