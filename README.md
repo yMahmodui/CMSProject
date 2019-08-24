@@ -27,6 +27,8 @@ There are two projects
         Update-Database
 ```
 - - run project
+
+ You can login as a admin with (userName:admin@localhost.com ----Password:password) to access list of users 
 Now you can test the project and enjoy it!
 
 Connect Angular project to backend in order to fetch post 
