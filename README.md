@@ -1,5 +1,5 @@
 # Toop Project
-Shows a page with a number of paragraphs of text, with a READ MORE button. • Clicking the READ MORE button invites the user to register to read more. • The registration only needs to be an email address and password. • Upon registration, with email validation, the user can now view the rest of the text that was previously hidden. • An alternative sign-in button allows someone to login to view that extra text too, if previously registered.
+Shows a page with a number of paragraphs of text, with a READ MORE button. â€¢ Clicking the READ MORE button invites the user to register to read more. â€¢ The registration only needs to be an email address and password. â€¢ Upon registration, with email validation, the user can now view the rest of the text that was previously hidden. â€¢ An alternative sign-in button allows someone to login to view that extra text too, if previously registered.
 
 # Help to Run Project
 There are two projects
@@ -9,9 +9,9 @@ There are two projects
 ```
         npm install -g @angular/cli
 ```
-- - install ts-md5
+- - go to project directory and install dependencies
 ```
-        npm install ts-md5 --save
+        npm install
 ```
 - - run project
 ```
