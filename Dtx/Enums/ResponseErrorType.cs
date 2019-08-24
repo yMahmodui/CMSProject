@@ -3,6 +3,8 @@
     public enum ResponseErrorType
     {
         NoError,
+        UnexpectedError,
+        PermissionDenied,
 
         //Login Enums
         UserNotFound,
@@ -10,6 +12,7 @@
 
         //Register Enums
         InvalidEmail,
-        ShortPassword
+        ShortPassword,
+        DuplicateEmail
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Dtx.Security
 {
@@ -20,7 +17,7 @@ namespace Dtx.Security
             try
             {
                 var bytInputs = Encoding.ASCII.GetBytes(value);
-                var oHash = System.Security.Cryptography.SHA1.Create();
+                var oHash = SHA1.Create();
                 var bytHashes = oHash.ComputeHash(bytInputs);
 
                 var oStringBuilder = new StringBuilder();
@@ -28,7 +25,34 @@ namespace Dtx.Security
                 foreach (var t in bytHashes)
                     oStringBuilder.Append(t.ToString("X2"));
 
-                return (oStringBuilder.ToString());
+                return oStringBuilder.ToString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        public static string GetMD5(string value)
+        {
+            if (value == null)
+                return string.Empty;
+
+            value = value.Trim();
+            if (value == string.Empty)
+                return string.Empty;
+
+            try
+            {
+                var oHash = MD5.Create();
+                var bytInputs = Encoding.ASCII.GetBytes(value);
+                var bytHashes = oHash.ComputeHash(bytInputs);
+                var oStringBuilder = new StringBuilder();
+
+                foreach (var t in bytHashes)
+                    oStringBuilder.Append(t.ToString("X2"));
+
+                return oStringBuilder.ToString();
             }
             catch
             {
