@@ -14,7 +14,7 @@ namespace Models
 
         public string Password { get; set; }
 
-        public DateTime RegisterDate { get; set; }
+        public string RegisterDate { get; set; }
 
         [ForeignKey(nameof(RoleId))] public virtual Role Role { get; set; }
     }

@@ -9,6 +9,6 @@ namespace Models
 
         [MaxLength(32)] public string PermissionTitle { get; set; }
 
-        public virtual List<RolePermission> RolePermissions { get; set; }
+        public virtual List<Role> Roles { get; set; }
     }
 }
