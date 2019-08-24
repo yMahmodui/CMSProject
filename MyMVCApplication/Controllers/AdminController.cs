@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using DAL;
-using Dtx.Time;
+using Dtx.Enums;
+using Dtx.Security;
 using ViewModels.AdminPanel;
 using ViewModels.General;
 
@@ -15,28 +14,39 @@ namespace MyMVCApp.Controllers
     {
         private readonly UnitOfWork UnitOfWork = new UnitOfWork();
 
-        public JsonResult GetRegisteredUser([FromBody] GetRegisteredUserViewModel.Request request)
+        public JsonResult GetRegisteredUsers([FromBody] GetRegisteredUsersViewModel.Request request)
         {
             var response = new JsonResultViewModel();
-               
+
             try
             {
-                if (User.Identity.IsAuthenticated
-                    && UnitOfWork.UserRepository.FindUserByEmail(User.Identity.Name).Role.RoleId != 1)
-                    return Json(response);
+                string email;
+                if (!JWT.ValidateToken(request.token ?? Request?.Headers?.Get("token"), out email) || UnitOfWork
+                        .UserRepository.FindUserByEmail(email).Role.Permissions.All(permission =>
+                            permission.PermissionId != (int) Permission.GetUsers))
+                    return Json(new JsonResultViewModel
+                    {
+                        error_message = "Permission Denied",
+                        error_type = ResponseErrorType.PermissionDenied
+                    });
 
-                var users = UnitOfWork.UserRepository.GetUsers().Select(user => new UserViewModel()
-                    { email = user.Email, register_date = user.RegisterDate.ToMilliseconds() }).ToList();
+                var users = UnitOfWork.UserRepository.GetUsers().Select(user => new UserViewModel
+                        {id = user.UserId, email = user.Email, register_date = user.RegisterDate})
+                    .ToList();
 
-                response.response = new GetRegisteredUserViewModel.Response()
+                response.data = new GetRegisteredUsersViewModel.Response
                 {
                     users = users
                 };
                 response.is_successful = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // log it
+                response = new JsonResultViewModel
+                {
+                    error_message = ex.Message,
+                    error_type = ResponseErrorType.UnexpectedError
+                };
             }
 
             return Json(response);

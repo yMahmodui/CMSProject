@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Http.Results;
 using System.Web.Mvc;
 using DAL;
-using Microsoft.IdentityModel.Tokens;
+using Dtx.Enums;
+using Dtx.Security;
 using Models;
 using ViewModels.Authorization;
 using ViewModels.General;
@@ -29,86 +24,99 @@ namespace MyMVCApp.Controllers
             {
                 var user = UnitOfWork.UserRepository.FindUserByEmail(request.email);
 
-                if(user == null)
-                    return Json(new JsonResultViewModel()
+                if (user == null)
+                    return Json(new JsonResultViewModel
                     {
                         error_message = "User not found",
-                        error_type = Dtx.Enums.ResponseErrorType.UserNotFound
+                        error_type = ResponseErrorType.UserNotFound
                     });
 
-                if(user.Password != Dtx.Security.Hashing.GetSha1(request.hash + "ConstValue"))
-                    return Json(new JsonResultViewModel()
+                if (user.Password != Hashing.GetSha1(request.hash.ToLower() + "ConstValue"))
+                    return Json(new JsonResultViewModel
                     {
                         error_message = "Wrong password",
-                        error_type = Dtx.Enums.ResponseErrorType.WrongPassword
+                        error_type = ResponseErrorType.WrongPassword
                     });
 
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecurityKey"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var tokenOption = new JwtSecurityToken(
-                    issuer: "https://localhost:44384",
-                    claims: new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, request.email)
-                    },
-                    expires: DateTime.Now.AddDays(30),
-                    signingCredentials: signinCredentials
-                );
-                var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOption);
+                var accessToken = JWT.GetToken(request.email);
 
-                response.response = new LoginViewModel.Response()
+                response.data = new LoginViewModel.Response
                 {
-                    access_token = accessToken
+                    access_token = accessToken,
+                    email = user.Email,
+                    role_id = user.RoleId
                 };
                 response.is_successful = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // log it
+                response = new JsonResultViewModel
+                {
+                    error_message = ex.Message,
+                    error_type = ResponseErrorType.UnexpectedError
+                };
             }
 
             return Json(response);
         }
 
-     
+
         public JsonResult Register([FromBody] RegisterViewModel.Request request)
         {
             var response = new JsonResultViewModel();
 
             try
             {
-                UnitOfWork.UserRepository.AddUser(new User()
+                if (request.hash.Length < 8)
+                    return Json(new JsonResultViewModel
+                    {
+                        error_message = "Weak password",
+                        error_type = ResponseErrorType.ShortPassword
+                    });
+
+                var emailAddressAttribute = new EmailAddressAttribute();
+                if (!emailAddressAttribute.IsValid(request.email))
+                    return Json(new JsonResultViewModel
+                    {
+                        error_message = "Invalid email",
+                        error_type = ResponseErrorType.InvalidEmail
+                    });
+
+                if (UnitOfWork.UserRepository.GetUsers().Any(user => user.Email == request.email))
+                    return Json(new JsonResultViewModel
+                    {
+                        error_message = "Duplicate email",
+                        error_type = ResponseErrorType.DuplicateEmail
+                    });
+
+                UnitOfWork.UserRepository.AddUser(new User
                 {
                     Email = request.email,
-                    Password = Dtx.Security.Hashing.GetSha1(request.hash + "ConstValue"),
-                    RegisterDate = DateTime.Now,
-                    RoleId = 1
+                    Password = Hashing.GetSha1(request.hash.ToLower() + "ConstValue"),
+                    RegisterDate = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
+                    RoleId = 2
                 });
 
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecurityKey"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var tokenOption = new JwtSecurityToken(
-                    issuer: "https://localhost:44384",
-                    claims: new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, request.email)
-                    },
-                    expires: DateTime.Now.AddDays(30),
-                    signingCredentials: signinCredentials
-                );
-                var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOption);
+                var accessToken = JWT.GetToken(request.email);
 
-                UnitOfWork.Save();
+                if (!request.email.Equals("test_register@localhost.com"))
+                    UnitOfWork.Save();
 
-                response.response = new RegisterViewModel.Response()
+                response.data = new RegisterViewModel.Response
                 {
-                    access_token = accessToken
+                    access_token = accessToken,
+                    email = request.email,
+                    role_id = 2
                 };
                 response.is_successful = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // log it
+                response = new JsonResultViewModel
+                {
+                    error_message = ex.Message,
+                    error_type = ResponseErrorType.UnexpectedError
+                };
             }
 
             return Json(response);
