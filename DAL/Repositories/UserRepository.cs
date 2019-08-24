@@ -7,12 +7,13 @@ namespace DAL.Repositories
 {
     internal class UserRepository : IUserRepository
     {
+        private readonly DatabaseContext DatabaseContext;
+
+
         public UserRepository(DatabaseContext context)
         {
             DatabaseContext = context;
         }
-
-        protected DatabaseContext DatabaseContext { get; set; }
 
         public List<User> GetUsers()
         {
