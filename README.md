@@ -20,12 +20,13 @@ There are two projects
 
 - [Current Project](https://github.com/yMahmodui/CMSProject)
 - - open MyMVCApplication.sln
-- - open PowerShell in visual studio and select Models solution then write following commands
+- - open Package Manager Console in visual studio and select Models solution as Default project then write following commands
 ```
         Enable-Migration
         Add-Migration InitialCreate
         Update-Database
 ```
+![Capture](https://user-images.githubusercontent.com/53936691/63840949-246eda00-c997-11e9-9149-108a54120309.PNG)
 - - run project
 
  You can login as a admin with (userName:admin@localhost.com ----Password:password) to access list of users 
